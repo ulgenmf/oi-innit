@@ -15,7 +15,6 @@ export default function Chat() {
 		api: "api/chat",
 	});
 	const url = "https://tts.verbatik.com/api/v1/tts";
-
 	const headers = {
 		"Content-Type": "application/ssml+xml",
 		Authorization: `Bearer ${verbatikKey}`,
@@ -135,14 +134,12 @@ const a=[
 											<AvatarImage  src="https://github.com/shadcn.png" className="w-20 h-20" alt="@shadcn" />
 											<AvatarFallback>CN</AvatarFallback>
 										</Avatar>
-										div
 										<div className="ml-3 text-start ">
 											<p className="font-semibold">
 												<span className="mr-1">User:</span>
 												{message.content}
 											</p>
 										</div>
-
 									</div>
 								) : (
 									<div className="flex items-center justify-start min-h-[20px] w-full shrink-0    ">
@@ -159,7 +156,6 @@ const a=[
 												<span className="mr-1">AI:</span>
 												{message.content}
 											</p>
-											div
 										</div>
 									</div>
 								)}

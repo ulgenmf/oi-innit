@@ -6,37 +6,37 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  userName String    @unique
-  email    String?   @unique
-  password String
-  messages Message[]
+  id            String         @id @default(uuid())
+  name          String
+  email         String
+  role          String
+  password      String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  conversations Conversation[]
+}
+
+model Conversation {
+  id Int @id @default(autoincrement())
+
+  title     String    @default("New Topic")
+  createdAt DateTime  @default(now())
+  userId    String
+  messages  Message[]
+  user      User      @relation(fields: [userId], references: [id])
 }
 
 model Message {
-  id        Int       @id @default(autoincrement())
-  content   String
-  mediaType MediaType
-  createdAt DateTime  @default(now())
-  senderId  Int
-  User      User      @relation(fields: [senderId], references: [id])
-  AIModel   AIModel?  @relation(fields: [aIModelId], references: [id])
-  aIModelId Int?
-}
+  id      Int    @id @default(autoincrement())
+  content String
 
-model AIModel {
-  id       Int       @id @default(autoincrement())
-  name     String
-  messages Message[]
-}
-
-enum MediaType {
-  TEXT
-  VOICE
-  LINK
+  sender         String
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  conversationId Int
 }
